@@ -21,6 +21,8 @@ Linux requires glibc 2.35+ (Ubuntu 22.04+ or Debian 12+). The pinned SDK include
 prebuilt runtimes for Linux, macOS and Windows, about 369 MB unpacked in total.
 
 ```sh
+git clone https://github.com/blucca/quietcue.git
+cd quietcue
 npm install
 export SMARTSPECTRA_API_KEY='your-key'
 npm start
@@ -37,6 +39,12 @@ The SDK's native `useFile()` processes the input through the same model pipeline
 as a local camera. It supplies SDK timestamps, metrics and validation callbacks.
 The server uses `@smartspectra/node-sdk/messages` to decode the real protobuf
 metrics. Keep your API key in your terminal environment, outside the repository.
+
+Interactive file replay uses a 33 ms SDK delay per frame for a 30-fps recording,
+giving you time to operate the rehearsal. The default SDK file mode processes
+frames as fast as possible. For a different source frame rate, adjust that one
+delay in `server.mjs` (for example, 40 ms for 25 fps). Quiet windows and pause
+durations always use timestamps from the recorded input.
 
 ## Complete one rehearsal
 

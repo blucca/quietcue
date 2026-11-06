@@ -68,7 +68,9 @@ async function start(mode, consent) {
     const clean = String(message).replaceAll(apiKey, '[redacted]');
     update({ status: 'error', hint: clean }); send('error', { code, message: clean, retryable });
   });
-  if (mode === 'file') sdk.useFile(videoPath);
+  // Interactive replay of a 30-fps recording; for a different source fps, adjust
+  // this SDK delay when that recording arrives. SDK timestamps remain the clock.
+  if (mode === 'file') sdk.useFile(videoPath, { interframeDelayMs: 33 });
   else sdk.useCamera(CameraSelection.default);
   update({ status: 'starting', source: mode, hint: 'Starting your native input. The first quiet breathing window takes 30 seconds.' });
   sdk.start();
