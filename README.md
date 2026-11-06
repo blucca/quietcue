@@ -102,6 +102,14 @@ zero native sessions:
 node check-startup-retry.mjs
 ```
 
+Once both quiet windows are complete, reaching file EOF or choosing End keeps
+the two measurements in completed run notes. A shorter recording keeps partial
+notes. Check the shared completion/stop path with zero SDK sessions:
+
+```sh
+node check-eof-ready.mjs
+```
+
 **Storyboard** illustrates the full interaction with labeled example values and
 uses zero SDK sessions. A real SDK camera or file run has its own source label.
 
