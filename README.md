@@ -81,6 +81,19 @@ SmartSpectra reports a 30-second average breathing rate with confidence. Its
 measurement conditions include stillness, stable camera, clear chest framing and
 silence. Our feedback uses those windows; talking cues support the speaking task.
 
+Sparse SDK callbacks retain rate/confidence for up to 10 seconds and talking/upper-chest
+trace for up to 1 second on the input timeline; expired fields become `null`.
+Validation codes other than 0 clear those observations, and breathing readiness requires
+a current positive-confidence rate plus a continuous 30-second valid, quiet window.
+These limits cover current development packet gaps (4.015 seconds for rate, 0.245 seconds
+for talking), with calibration planned from the first consented adult recording.
+
+Minimal packet/controller check, using the protobuf decoder with zero SDK sessions:
+
+```sh
+node check-native-packets.mjs
+```
+
 **Storyboard** illustrates the full interaction with labeled example values and
 uses zero SDK sessions. A real SDK camera or file run has its own source label.
 

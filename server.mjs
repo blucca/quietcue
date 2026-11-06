@@ -27,15 +27,54 @@ function relativeTime(us) {
   return timeMs;
 }
 function numberOrNull(value) { return Number.isFinite(value) ? value : null; }
+// Current development packets have gaps up to 4.015 s for rate and 0.245 s
+// for talking. These source-time limits cover that replay; calibrate them
+// against the first consented adult recording when it arrives.
+const SIGNAL_TTL_MS = { rate: 10_000, upperTrace: 1_000, talking: 1_000 };
+let latestSignal, latestSignalAtMs;
+function resetSignal() {
+  latestSignal = { rate: null, confidence: null, upperTrace: null, talking: null };
+  latestSignalAtMs = { rate: null, upperTrace: null, talking: null };
+}
+resetSignal();
+function validationStatus(code, us, hint) {
+  const tMs = relativeTime(us);
+  validation = { code, hint };
+  if (code !== 0) resetSignal();
+  send('validation', { ...validation, tMs });
+}
 function signal(buf, us) {
+  const tMs = relativeTime(us);
   const m = decodeMetrics(buf);
   const rate = m.breathing?.rate?.at(-1);
   const chest = m.breathing?.upperTrace?.at(-1);
   const talking = m.face?.talking?.at(-1);
-  send('signal', { source: 'smartspectra', tMs: relativeTime(us),
-    rate: numberOrNull(rate?.value), confidence: numberOrNull(rate?.confidence),
-    upperTrace: numberOrNull(chest?.value), talking: typeof talking?.detected === 'boolean' ? talking.detected : null,
-    validation });
+  // Retain sparse observations within their own age limit. Quality loss
+  // clears the cache, including measurements received during that loss.
+  if (validation.code !== 0) resetSignal();
+  else {
+    if (rate) {
+      latestSignal.rate = numberOrNull(rate.value);
+      latestSignal.confidence = numberOrNull(rate.confidence);
+      latestSignalAtMs.rate = tMs;
+    }
+    if (chest) {
+      latestSignal.upperTrace = numberOrNull(chest.value);
+      latestSignalAtMs.upperTrace = tMs;
+    }
+    if (talking) {
+      latestSignal.talking = typeof talking.detected === 'boolean' ? talking.detected : null;
+      latestSignalAtMs.talking = tMs;
+    }
+    for (const field of ['rate', 'upperTrace', 'talking']) {
+      if (latestSignalAtMs[field] !== null && tMs - latestSignalAtMs[field] > SIGNAL_TTL_MS[field]) {
+        latestSignal[field] = null;
+        latestSignalAtMs[field] = null;
+        if (field === 'rate') latestSignal.confidence = null;
+      }
+    }
+  }
+  send('signal', { source: 'smartspectra', tMs, ...latestSignal, validation });
 }
 async function stop() {
   const old = sdk;
@@ -52,13 +91,12 @@ async function start(mode, consent) {
   if (!['camera', 'file'].includes(mode)) throw Object.assign(new Error('Choose camera or file input.'), { status: 400 });
   if (mode === 'file' && !state.videoConfigured) throw Object.assign(new Error('Set QUIETCUE_VIDEO_PATH to your consented MP4 before starting the server.'), { status: 422 });
   originUs = null; timeMs = 0;
+  resetSignal();
   validation = { code: null, hint: 'The SDK is checking framing, light and measurement readiness.' };
   sdk = new SmartSpectraSDK({ apiKey, enableTelemetry: false,
     requestedMetrics: [MetricType.CHEST_BREATHING, MetricType.BREATHING_RATE, MetricType.TALKING] });
   sdk.on('metrics', signal);
-  sdk.on('validationStatus', (code, us, hint) => {
-    relativeTime(us); validation = { code, hint }; send('validation', { ...validation, tMs: timeMs });
-  });
+  sdk.on('validationStatus', validationStatus);
   sdk.on('processingStatus', status => {
     if (status === ProcessingStatus.kRunning) update({ status: 'running', hint: 'Native SmartSpectra signals are arriving from your input.' });
     else if (status === ProcessingStatus.kError) update({ status: 'error', hint: 'The native session stopped with an SDK error. Read the error below.' });
