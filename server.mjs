@@ -111,7 +111,11 @@ async function start(mode, consent) {
   if (mode === 'file') sdk.useFile(videoPath, { interframeDelayMs: 33 });
   else sdk.useCamera(CameraSelection.default);
   update({ status: 'starting', source: mode, hint: 'Starting your native input. The first quiet breathing window takes 30 seconds.' });
-  sdk.start();
+  try { sdk.start(); }
+  catch (error) {
+    await stop(); // A synchronous input failure still owns the native instance.
+    throw error;
+  }
 }
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
   '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.woff2': 'font/woff2' };

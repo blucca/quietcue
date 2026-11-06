@@ -94,6 +94,14 @@ Minimal packet/controller check, using the protobuf decoder with zero SDK sessio
 node check-native-packets.mjs
 ```
 
+A failed camera/file start releases the native instance so you can correct the
+input and start a fresh session in the same page. Check this recovery path with
+zero native sessions:
+
+```sh
+node check-startup-retry.mjs
+```
+
 **Storyboard** illustrates the full interaction with labeled example values and
 uses zero SDK sessions. A real SDK camera or file run has its own source label.
 
