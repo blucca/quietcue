@@ -46,6 +46,28 @@ frames as fast as possible. For a different source frame rate, adjust that one
 delay in `server.mjs` (for example, 40 ms for 25 fps). Quiet windows and pause
 durations always use timestamps from the recorded input.
 
+### Headless Linux: the Vulkan driver
+
+The SDK ships a Vulkan loader; Linux supplies its driver. If startup logs contain
+`Vulkan is not available: vkCreateInstance failed with ErrorIncompatibleDriver`,
+select an installed Vulkan ICD before `npm start`. For Linux x64 with Chromium's
+SwiftShader at the path below, the existing software driver works:
+
+```sh
+export VK_ICD_FILENAMES='/usr/lib/chromium/vk_swiftshader_icd.json'
+npm start
+```
+
+Use `VK_ICD_FILENAMES` with the SDK 3.4.0 bundled loader. A desktop's native
+Vulkan driver remains the first choice. This setting reuses an installed driver;
+the app's runtime and camera/file interfaces stay the same.
+
+[Our bounded startup receipt](docs/runtime-startup.json) records the real SDK
+starting, validating 360 frames, reaching file EOF and destroying its session
+on a generated, solid-color video. The driver setting clears the native model
+delivery error. Its scope is pipeline startup; adult rehearsal and usable human
+metrics are the next delivery milestone.
+
 ## Complete one rehearsal
 
 1. **Settle:** stand or sit still with a stable camera, good light and your face

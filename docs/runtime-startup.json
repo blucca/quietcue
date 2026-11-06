@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "sdk_version": "3.4.0",
+  "platform": "Linux x64; Arch Linux; Node 26.12",
+  "scope": "native pipeline startup and generated-video lifecycle; adult rehearsal remains the next milestone",
+  "input": {
+    "kind": "generated solid-color video; zero people",
+    "duration_seconds": 12,
+    "width": 640,
+    "height": 480,
+    "fps": 30,
+    "frames": 360,
+    "reproduce_video": "ffmpeg -f lavfi -i color=c=0x353a42:s=640x480:r=30:d=12 -an -c:v libx264 -threads 1 -preset ultrafast -pix_fmt yuv420p nonhuman-startup.mp4"
+  },
+  "native_driver": {
+    "path": "/usr/lib/chromium/vk_swiftshader_icd.json",
+    "env": "VK_ICD_FILENAMES",
+    "source": "already-installed Chromium SwiftShader",
+    "bundled_loader_vkCreateInstance": 0,
+    "physical_devices": 1
+  },
+  "lifecycle": [
+    {
+      "status": 1,
+      "elapsedMs": 5023
+    },
+    {
+      "status": 2,
+      "elapsedMs": 6132
+    },
+    {
+      "status": 3,
+      "elapsedMs": 6139
+    },
+    {
+      "status": 4,
+      "elapsedMs": 18206
+    },
+    {
+      "status": 1,
+      "elapsedMs": 18210
+    }
+  ],
+  "elapsed_ms": 18214,
+  "validation_code_counts": {
+    "0": 1,
+    "1": 1,
+    "5": 358
+  },
+  "metrics_events": 0,
+  "valid_breathing_events": 0,
+  "talking_true_events": 0,
+  "native_error_callbacks": [],
+  "native_model_delivery_failure_lines": 0,
+  "destroyed": true,
+  "human_tasks": 0
+}
