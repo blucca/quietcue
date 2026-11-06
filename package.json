@@ -1,0 +1,10 @@
+{
+  "name": "quietcue",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A quiet preparation, speaking-cue and reflection rehearsal using SmartSpectra.",
+  "scripts": { "start": "node server.mjs" },
+  "engines": { "node": ">=20" },
+  "dependencies": { "@smartspectra/node-sdk": "3.4.0" }
+}
