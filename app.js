@@ -305,6 +305,8 @@ async function viewNotes() {
 
 async function finishEarly(message = '') {
   if (!run) return;
+  // Keep a finished reflection when EOF or End arrives before View run notes.
+  if (run.phase === 'reflect' && run.quietReady) return viewNotes();
   if (run.phase === 'speak') run = beginReflect(run);
   active = false;
   starting = false;
