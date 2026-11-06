@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#532D78">
+  <meta name="description" content="Rehearse your own words: a quiet start, a live speaking cue, and a quiet moment to reflect. Storyboard uses illustrated signals; live mode uses the local Presage SmartSpectra SDK.">
+  <title>QuietCue — room for your words</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23532D78'/%3E%3Crect x='9' y='13' width='4' height='10' rx='2' fill='%23FFC760'/%3E%3Crect x='19' y='7' width='4' height='16' rx='2' fill='%23FFC760'/%3E%3C/svg%3E">
+  <link rel="preload" href="./fonts/literata-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./fonts/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#rehearsal">Skip to rehearsal</a>
+  <div class="page-shell">
+    <header class="masthead">
+      <a class="brand" href="./" aria-label="QuietCue home">
+        <svg class="brand-mark" width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="11" fill="currentColor"/><rect x="10" y="15" width="4" height="11" rx="2" fill="#FFC760"/><rect x="22" y="9" width="4" height="17" rx="2" fill="#FFC760"/></svg>
+        <span>QuietCue</span>
+      </a>
+      <p class="brand-description">A stage for your next rehearsal.</p>
+      <div class="source-switch" role="group" aria-label="Signal source">
+        <button id="storyboard-mode" type="button" class="source-button" aria-pressed="true">Storyboard</button>
+        <button id="live-mode" type="button" class="source-button" aria-pressed="false">Live SDK</button>
+      </div>
+    </header>
+
+    <main id="rehearsal" tabindex="-1">
+      <div class="intro-row">
+        <h1 id="page-title">Give your words a little room.</h1>
+        <a class="how-link" href="#script-input">Edit script</a>
+      </div>
+
+      <ol class="rehearsal-track" aria-label="Rehearsal stages">
+        <li class="track-step is-current" data-step="settle" aria-current="step"><span class="step-number">1</span><span><strong>Settle</strong><small>30 seconds, still &amp; quiet</small></span></li>
+        <li class="track-step" data-step="speak"><span class="step-number">2</span><span><strong>Speak</strong><small>Read. Pause. Turn the page.</small></span></li>
+        <li class="track-step" data-step="reflect"><span class="step-number">3</span><span><strong>Reflect</strong><small>One more quiet moment</small></span></li>
+      </ol>
+
+      <p id="source-notice" class="source-notice"><span class="source-dot" aria-hidden="true"></span><span><strong>Storyboard.</strong> Example signals play in this browser.</span></p>
+
+      <div class="rehearsal-layout">
+        <section class="stage-column" aria-label="Your rehearsal stage">
+          <div id="stage" class="stage" data-phase="settle" data-cue="idle">
+            <div class="stage-topline">
+              <span id="paragraph-position">Paragraph 1 of 3</span>
+              <span id="stage-instruction">Read this to yourself first.</span>
+            </div>
+            <div class="script-space">
+              <span class="stage-light" aria-hidden="true"></span>
+              <p id="stage-script" class="stage-script">The most useful ideas begin with a little space. We pause, find our footing, and let the next thought arrive.</p>
+            </div>
+            <div class="stage-bottomline">
+              <span class="talk-cue"><span class="cue-symbol" aria-hidden="true"></span><span id="cue-label">Your stage is ready</span></span>
+              <span id="elapsed" class="elapsed" aria-label="Input elapsed time">0:00</span>
+            </div>
+          </div>
+
+          <div class="stage-tools">
+            <div class="paragraph-controls" role="group" aria-label="Paragraph navigation">
+              <button id="previous-paragraph" class="text-button" type="button" disabled><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="m12 4-6 6 6 6"/></svg>Previous</button>
+              <button id="next-paragraph" class="text-button" type="button">Next paragraph<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="m8 4 6 6-6 6"/></svg></button>
+            </div>
+            <div class="type-controls" role="group" aria-label="Script text size">
+              <button id="smaller-type" type="button" aria-label="Make script text smaller">A<span aria-hidden="true">−</span></button>
+              <button id="larger-type" type="button" aria-label="Make script text larger">A<span aria-hidden="true">+</span></button>
+            </div>
+          </div>
+
+          <div id="stage-action-slot" class="stage-action-slot"></div>
+
+          <section id="quiet-panel" class="quiet-panel" aria-labelledby="quiet-title">
+            <div class="quiet-heading">
+              <div><h2 id="quiet-title">A quiet starting point</h2><p id="quiet-hint">Start the rehearsal to collect a 30-second quiet window.</p></div>
+              <div id="quiet-readout" class="quiet-readout"><span id="quiet-rate">—</span><span id="quiet-unit">breaths / min</span></div>
+            </div>
+            <div id="quiet-progress" class="quiet-progress" role="progressbar" aria-label="Continuous quiet window" aria-valuemin="0" aria-valuemax="30" aria-valuenow="0"><span id="quiet-progress-fill"></span></div>
+            <div class="quiet-caption"><span id="quiet-window-label">0 / 30 seconds quiet</span><span id="confidence-label">Waiting for signal</span></div>
+            <div class="trace-row">
+              <svg id="breathing-trace" class="breathing-trace" viewBox="0 0 620 50" preserveAspectRatio="none" role="img" aria-label="Upper-chest breathing waveform. Waiting for a valid quiet window."><path id="trace-path" d=""/></svg>
+              <span id="trace-caption">Upper-chest waveform appears after a valid quiet window.</span>
+            </div>
+          </section>
+
+          <section id="run-summary" class="run-summary" aria-labelledby="summary-title" hidden>
+            <div class="summary-heading"><h2 id="summary-title" tabindex="-1">Two quiet moments. Your own pace.</h2><span id="summary-source" class="summary-source">Storyboard sample</span></div>
+            <div class="comparison" aria-label="Quiet breathing before and after your rehearsal">
+              <div><h3>Before speaking</h3><p><strong id="before-rate">—</strong><span>breaths / min</span></p><small id="before-confidence">30-second quiet window</small></div>
+              <svg class="comparison-divider" width="54" height="46" viewBox="0 0 54 46" aria-hidden="true"><path d="M5 23h44M19 11v24M35 11v24"/></svg>
+              <div><h3>After speaking</h3><p><strong id="after-rate">—</strong><span>breaths / min</span></p><small id="after-confidence">30-second quiet window</small></div>
+            </div>
+            <div class="pause-review">
+              <h3>The spaces between your words</h3>
+              <p id="pause-summary">Your detected speaking pauses will appear here.</p>
+              <div id="pause-timeline" class="pause-timeline" role="img" aria-label="Detected speech and pauses"></div>
+              <p class="small-copy">Pauses are quiet intervals of at least 0.5 seconds, bounded by detected speech or the end of Speak. Camera-quality gaps are excluded.</p>
+            </div>
+            <p id="summary-meaning" class="summary-meaning">Each breathing value is the SDK’s 30-second average from a valid quiet window. These are two observations of your rehearsal.</p>
+            <div class="summary-actions"><button id="save-notes" class="primary-button" type="button">Save run notes<svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m-4-4 4 4 4-4M4 13v4h12v-4"/></svg></button><button id="start-again" class="secondary-button" type="button">Start again</button></div>
+            <p id="save-status" class="small-copy">Anonymous notes stay in memory. Save downloads a copy to your device.</p>
+          </section>
+        </section>
+
+        <aside class="control-column" aria-label="Script and rehearsal controls">
+          <section class="script-editor" aria-labelledby="editor-title">
+            <div class="section-heading"><h2 id="editor-title">Your words</h2><span id="paragraph-count">3 paragraphs</span></div>
+            <label class="sr-only" for="script-input">Edit your rehearsal script. Separate paragraphs with a blank line.</label>
+            <textarea id="script-input" rows="7" spellcheck="true" aria-describedby="script-help script-status">The most useful ideas begin with a little space. We pause, find our footing, and let the next thought arrive.
+
+Today, I want to share one idea that matters to me. I will give it time to land before moving to the next.
+
+A good ending gives people something to carry with them. This is the thought I would like to leave with you.</textarea>
+            <p id="script-help" class="small-copy">Use a blank line between paragraphs. Your script stays in this browser.</p>
+            <button id="apply-script" class="secondary-button apply-script" type="button" hidden>Use this script</button>
+            <p id="script-status" class="small-copy sr-only" role="status"></p>
+          </section>
+
+          <section id="input-panel" class="input-panel" aria-labelledby="input-title">
+            <h2 id="input-title">Try the whole rehearsal</h2>
+            <div id="storyboard-explanation"><p>Generated breathing and talking examples illustrate each stage.</p></div>
+
+            <div id="live-setup" hidden>
+              <fieldset class="input-choice"><legend>Local SDK input</legend><label><input type="radio" name="input-mode" value="camera" checked> This device’s camera</label><label><input id="video-input" type="radio" name="input-mode" value="file" disabled> An authorized local video</label></fieldset>
+              <p id="connection-status" class="connection-status">Looking for the local SDK service…</p>
+              <a id="local-sdk-link" class="local-sdk-link" href="http://127.0.0.1:3795" target="_blank" rel="noreferrer" hidden>Open local QuietCue</a>
+              <p id="camera-guidance">Fix the camera in place. Keep your face and chest visible, well lit, and still during the quiet stages.</p>
+              <div class="consent-panel">
+                <p>Each SDK session automatically sends derived measurements and session/request metadata to Presage. Presage sends measurements to Anthropic to generate AI Insights.</p>
+                <label class="consent-check"><input id="adult-consent" type="checkbox"><span id="adult-consent-label">I am 18 or older and consent to using my camera for this rehearsal.</span></label>
+                <label class="consent-check"><input id="data-consent" type="checkbox"><span>I consent to this session’s automatic Presage and Anthropic Insights processing.</span></label>
+              </div>
+              <details class="data-details"><summary>Camera &amp; data details</summary><div><p>Camera images are processed on this device. Insights requests contain derived measurements and metadata; images, video, audio and face data stay outside those requests. QuietCue supplies zero script or prompt text to the SDK.</p><p>Automatic Insights processing stays on for each SDK session. Diagnostic telemetry is disabled.</p><p>Presage stores Insights requests and responses while the developer account is active and deletes them within 60 days after it closes. Backups expire within 90 days. Anthropic’s commercial terms provide limited retention and exclude model training on customer information.</p><p>For a local video, use a recording you have permission to process, showing a consenting adult. The file is configured on the local server with <code>QUIETCUE_VIDEO_PATH</code>.</p><a href="https://presagetech.com/legal/privacy-policy" target="_blank" rel="noreferrer">Presage SDK privacy policy</a></div></details>
+              <a class="return-to-stage" href="#stage">Return to your stage</a>
+            </div>
+
+            <div class="rehearsal-action">
+              <p id="action-guidance">Read silently first. The quiet window gets ready before you begin speaking.</p>
+              <button id="main-action" class="primary-button" type="button">Start Storyboard<svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 7 6-7 6z"/></svg></button>
+              <button id="stop-action" class="stop-button" type="button" hidden>End this run</button>
+              <p id="action-hint" class="small-copy">About one minute of quiet, plus your speaking time.</p>
+              <a id="read-consent" class="read-consent" href="#live-setup" hidden>Read camera &amp; data notice</a>
+              <p id="app-error" class="app-error" role="alert" hidden></p>
+            </div>
+          </section>
+
+          <section id="how-it-works" class="how-it-works" aria-labelledby="how-title">
+            <h2 id="how-title">The cue follows your voice</h2>
+            <div class="cue-key"><span class="key-light" aria-hidden="true"></span><p>Gold rises with detected speech. In a pause, the stage makes space.</p></div>
+            <p>Breathing feedback belongs to the quiet stages: 30 continuous seconds, clear camera quality, and a positive SDK confidence value. During Speak, breathing feedback is paused.</p>
+            <p class="small-copy">Live SDK uses the local Presage SmartSpectra SDK. Storyboard uses clearly marked example signals.</p>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="page-footer"><span>Made for rehearsal, one paragraph at a time.</span><span>Run notes stay in browser memory. Reload clears this run.</span></footer>
+  </div>
+  <div id="announcements" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

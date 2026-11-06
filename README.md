@@ -5,8 +5,13 @@ time, then take a quiet look back. Live SmartSpectra talking detection moves the
 speaking cue; breathing feedback is shown during valid, still, quiet windows.
 
 Built as a new project during the November 4–22, 2026 Presage DEV challenge.
-Current delivery: native integration and rehearsal interface in development.
-The first adult camera rehearsal and its real SDK demo video are pending.
+Current delivery: native integration and a complete rehearsal interface. The
+Storyboard replays the whole task with illustrated signals. Next milestone:
+one adult camera rehearsal and its real SDK demo video.
+
+![QuietCue speaking stage with clearly labeled illustrated signals](docs/screenshots/storyboard-speaking.png)
+
+[Try the Storyboard](https://blucca.github.io/quietcue/) or run the SDK on your own computer.
 
 ## Run on your computer
 
