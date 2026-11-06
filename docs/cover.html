@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1000, initial-scale=1">
+  <meta name="theme-color" content="#532D78">
+  <meta name="description" content="QuietCue brand cover: an original abstract rehearsal manuscript and pause cue.">
+  <title>QuietCue cover</title>
+  <style>
+    @font-face {
+      font-family: Literata;
+      font-style: normal;
+      font-weight: 400 600;
+      font-display: block;
+      src: url("../public/fonts/literata-latin.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Atkinson Hyperlegible Next";
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: block;
+      src: url("../public/fonts/atkinson-hyperlegible-next-latin.woff2") format("woff2");
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 1000px; height: 420px; overflow: hidden; }
+    body { background: #532D78; font-synthesis: none; }
+    .cover { position: relative; width: 1000px; height: 420px; overflow: hidden; background: #532D78; color: #FFFFFF; }
+    .wordmark { position: absolute; left: 70px; top: 127px; margin: 0; font: 500 82px/1.3 Literata, Georgia, serif; letter-spacing: -3.5px; }
+    .tagline { position: absolute; left: 76px; top: 250px; margin: 0; font: 400 25px/1.4 "Atkinson Hyperlegible Next", Arial, sans-serif; letter-spacing: .15px; color: #EEE7F7; }
+    .manuscript { position: absolute; left: 617px; top: 72px; width: 333px; height: 280px; }
+  </style>
+</head>
+<body>
+  <!-- Fixed-size original brand artwork. Render at 1000 × 420, deviceScaleFactor 1,
+       after document.fonts.ready. Fonts are the product's existing OFL assets.
+       The manuscript and cue are abstract marks; this cover contains no SDK data. -->
+  <main class="cover" aria-label="QuietCue. Settle. Speak. Reflect.">
+    <h1 class="wordmark">QuietCue</h1>
+    <p class="tagline">Settle. Speak. Reflect.</p>
+    <svg class="manuscript" viewBox="0 0 333 280" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <g transform="rotate(-6 166 140)">
+        <!-- Two open leaves: a manuscript, with space for a pause. -->
+        <path d="M166 45C121 19 66 15 12 28V238C66 225 121 230 166 257V45Z" fill="#EEE7F7"/>
+        <path d="M166 45C211 19 266 15 320 28V238C266 225 211 230 166 257V45Z" fill="#FFFFFF"/>
+        <path d="M166 46V256" stroke="#D8CBE7" stroke-width="2"/>
+        <!-- Three abstract paragraph bundles, with deliberate quiet intervals. -->
+        <g stroke="#532D78" stroke-width="3" stroke-linecap="round" opacity=".42">
+          <path d="M39 65C76 61 106 67 136 80"/>
+          <path d="M39 79C70 76 96 79 116 86"/>
+          <path d="M39 170C76 167 106 173 136 185"/>
+          <path d="M39 184C66 182 85 185 101 190"/>
+          <path d="M196 78C227 65 260 62 292 65"/>
+          <path d="M196 92C220 82 244 78 267 79"/>
+          <path d="M196 184C227 171 260 168 292 171"/>
+          <path d="M196 198C214 190 234 187 251 186"/>
+        </g>
+        <g stroke="#532D78" stroke-width="3" stroke-linecap="round">
+          <path d="M73 118C97 120 116 126 136 135"/>
+          <path d="M73 132C90 133 104 138 118 143"/>
+          <path d="M196 129C227 116 260 113 292 116"/>
+          <path d="M196 143C222 132 247 128 276 130"/>
+          <path d="M196 157C212 150 230 146 246 144"/>
+        </g>
+        <!-- Unequal brass strokes echo QuietCue's original brand mark. -->
+        <rect x="35" y="119" width="8" height="28" rx="4" fill="#FFC760"/>
+        <rect x="51" y="103" width="8" height="44" rx="4" fill="#FFC760"/>
+      </g>
+    </svg>
+  </main>
+</body>
+</html>
