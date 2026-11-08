@@ -15,8 +15,10 @@ one adult camera rehearsal and its real SDK demo video.
 
 **Volunteer rehearsal:** try your own short talk with the local live setup,
 or use the [private recorded-camera testing path](docs/recorded-camera-rehearsal.md).
-For that path, we agree consent and a transfer method first, then operate the
-real SDK on our computer and return an app-only replay for your review.
+For that path, email [belgialucca@gmail.com](mailto:belgialucca@gmail.com?subject=QuietCue%20recorded-camera%20rehearsal)
+with the short talk you want to rehearse. We agree consent and a private transfer
+method first, then operate the real SDK on our computer and return an app-only
+replay for your review.
 
 ## Run on your computer
 

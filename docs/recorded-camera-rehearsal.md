@@ -12,10 +12,9 @@ minutes, and your own words; the SDK and developer key are on our side.
 
 ## First, reply with your interest
 
-Reply to the [volunteer task](https://dev.to/blucca/comment/3kcnj), or email
-[belgialucca@gmail.com](mailto:belgialucca@gmail.com?subject=QuietCue%20recorded-camera%20rehearsal).
-Describe the short talk you want to rehearse. We agree the following permissions
-and a private transfer method before you send a recording.
+Email [belgialucca@gmail.com](mailto:belgialucca@gmail.com?subject=QuietCue%20recorded-camera%20rehearsal)
+with the short talk you want to rehearse. We agree the following permissions
+and a private transfer method in that conversation before you send a recording.
 
 1. **Adult and source recording:** “I am 18+ and an adult where I live. This is
    my own voluntary speaking task and recording. I agree to one private
@@ -57,7 +56,7 @@ retention and deletion follow the
 
 We keep received task files private for feedback, demo preparation and
 verification, then delete our copies when challenge follow-up ends, by
-**2027-01-31**. Request earlier deletion in the original reply thread. The
+**2027-01-31**. Request earlier deletion by replying to the task email. The
 private transfer method has its own data handling, which we agree before
 receipt. The proposed public cut shows the app; source face and audio stay
 private. Public use of the source video requires a separate written grant.
