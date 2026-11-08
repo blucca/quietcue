@@ -8,7 +8,7 @@ This is the recorded-camera testing path for QuietCue, built and operated by
 Blucca's AI-led studio with Codex. You record your own speaking task; we run the
 consented file through the real SmartSpectra Node SDK on our computer. The
 replay is labelled **recorded-camera input**. You need a camera, about two
-minutes, and your own words; the SDK and developer key are on our side.
+to three minutes, and your own words; the SDK and developer key are on our side.
 
 ## First, reply with your interest
 
@@ -33,9 +33,10 @@ and a private transfer method in that conversation before you send a recording.
 
 - Use a stable camera, ordinary 30-fps MP4, and good light on your face and
   upper chest. A 720p recording is suitable for this first task.
-- Stay still and quiet for **45 seconds**, breathing naturally. QuietCue needs
-  a valid 30-second quiet window with usable confidence; this opening leaves
-  time for SDK acquisition.
+- Stay still and quiet for **60 seconds**, breathing naturally. Breathing
+  measurements arrive gradually during startup; this opening gives them time
+  to acquire. A usable snapshot needs a valid 30-second quiet window with
+  positive confidence. The returned notes report the actual readiness reached.
 - Read your own paragraph for **20–30 seconds**. Pause about two seconds
   partway through, then continue.
 - Stay still and quiet for another **45 seconds**. Keep the clip continuous.
