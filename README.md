@@ -13,6 +13,11 @@ one adult camera rehearsal and its real SDK demo video.
 
 [Try the Storyboard](https://blucca.github.io/quietcue/) or run the SDK on your own computer.
 
+**Volunteer rehearsal:** try your own short talk with the local live setup,
+or use the [private recorded-camera testing path](docs/recorded-camera-rehearsal.md).
+For that path, we agree consent and a transfer method first, then operate the
+real SDK on our computer and return an app-only replay for your review.
+
 ## Run on your computer
 
 Requires Node 20+, a local camera or a consented MP4, and your own free
